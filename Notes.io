@@ -3,11 +3,14 @@
 Note := Object clone do(
 	inSharps := nil
 	inFlats := nil
-	
+
 	asString := method(inSharps)
-	up := method(halfTones, Notes at((Notes indexOf(self) + halfTones) % (Notes size)) )
+	up := method(halfTones, Notes at(((Notes indexOf(self) + halfTones) + (Notes size)) % (Notes size)) )
 	down := method(halfTones, up(-halfTones))
-	
+
+	flat := method( down(1) )
+	sharp := method( up(1) )
+
 	prime := 		method( self )
 	minorSecond := 	method( up(1) )
 	second := 		method( up(2) )
@@ -27,16 +30,16 @@ Notes := List clone do(
 	Naturals := List clone
 	Sharps := List clone
 	Flats := List clone
-	
+
 	// Define natural notes
 	list("A", "B", "C", "D", "E", "F", "G") foreach(note,
 		setSlot(note, Note clone)
 		getSlot(note) updateSlot("inSharps", note)
 		getSlot(note) updateSlot("inFlats", note)
-		
+
 		Naturals append(getSlot(note))
 	)
-	
+
 	// Define sharps/flats
 	list(list("A#", "Bb"), list("C#", "Db"), list("D#", "Eb"),
 							list("F#", "Gb"), list("G#", "Ab")) foreach(note,
@@ -44,13 +47,13 @@ Notes := List clone do(
 		setSlot(note first, Note clone)
 		getSlot(note first) updateSlot("inSharps", note first)
 		getSlot(note first) updateSlot("inFlats", note second)
-		
+
 		setSlot(note second, getSlot(note first))
-		
+
 		Sharps append(getSlot(note first))
 		Flats append(getSlot(note second))
 	)
-	
+
 	appendSeq(list("A", "A#", "B", "C", "C#", "D", 
 				   "D#", "E", "F", "F#", "G", "G#") map(note, getSlot(note)))
 )

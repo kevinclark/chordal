@@ -39,4 +39,7 @@ describe(note, Note,
 	note("has a minorSeventh",	verify(Notes C minorSeventh == Notes Bb))
 	note("has a seventh",		verify(Notes C seventh == Notes B))
 	note("has an octave",		verify(Notes C octave == Notes C))
+
+	note("can flat",			verify(Notes A flat == Notes Ab))
+	note("can sharp",			verify(Notes A sharp == Notes getSlot("A#")))
 )
