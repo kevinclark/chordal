@@ -5,6 +5,8 @@ Note := Object clone do(
 	inFlats := nil
 
 	asString := method(inSharps)
+	asChord := method( Chords getSlot(asString) )
+	
 	up := method(halfTones, Notes at(((Notes indexOf(self) + halfTones) + (Notes size)) % (Notes size)) )
 	down := method(halfTones, up(-halfTones))
 

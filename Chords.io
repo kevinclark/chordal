@@ -2,6 +2,8 @@ Chord := Object clone do(
 	notes := method("(undefined)")
 	root := nil
 	
+	asString := method( root inSharps )
+	
 	setRoot := method(newRoot,
 		root = Notes getSlot(newRoot asString)
 		self
@@ -25,17 +27,19 @@ MajorChords := List clone do(
 )
 
 MinorChord := Chord clone do(
+	asString := method( super(asString) .. "min" )
 	notes = method( list(root, root minorThird, root fifth) )
 )
 
 Dominant7thChord := MajorChord clone do(
+	asString := method( super(asString) .. "dom" )
 	notes = method( super(notes) append(root seventh flat) )
 )
 
 Chords := List clone do ( 
 	MajorChords foreach(chord, 
 		setSlot(chord root inFlats, chord)
-		setSlot(chord root inSharps, chord)
+		setSlot(chord root inSharps, chord) // might overwrite the flats version
 		append(chord)
 	)
 )
